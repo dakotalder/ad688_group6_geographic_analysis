@@ -2,11 +2,13 @@ project:
   type: website
 
 website:
-  title: "ad688_group6_geographic_analysis"
+  title: "Geographic Analysis - Group 6 AD688"
   navbar:
     left:
       - href: index.qmd
         text: Home
+      - href: data_analysis.qmd
+        text: Data Analysis
       - about.qmd
 
 format:
