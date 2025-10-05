@@ -22,3 +22,30 @@ format:
     number-sections: true
     df-print: paged
 ---
+
+
+```{python}
+from pyspark.sql import SparkSession
+
+# Start a Spark session
+spark = SparkSession.builder.appName("JobPostingsAnalysis").getOrCreate()
+
+# Load the CSV file into a Spark DataFrame
+df = spark.read.option("header", "true").option("inferSchema", "true").option("multiLine","true").option("escape", "\"").csv("../data/lightcast_job_postings.csv")
+
+# Register the DataFrame as a temporary SQL view
+df.createOrReplaceTempView("project_data")
+
+
+
+```
+
+```{python}
+columns_to_drop = [
+    "ID", "URL", "ACTIVE_URLS", "DUPLICATES", "LAST_UPDATED_TIMESTAMP",
+    "NAICS2", "NAICS3", "NAICS4", "NAICS5", "NAICS6",
+    "SOC_2", "SOC_3", "SOC_5"
+]
+cleaned_data = df.drop(columns=columns_to_drop, inplace=True)
+
+```
