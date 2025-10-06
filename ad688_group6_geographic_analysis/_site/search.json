@@ -1,0 +1,9 @@
+[
+  {
+    "objectID": "data_analysis.html",
+    "href": "data_analysis.html",
+    "title": "Data Analysis",
+    "section": "",
+    "text": "from pyspark.sql import SparkSession\n\n# Start a Spark session\nspark = SparkSession.builder.appName(\"JobPostingsAnalysis\").getOrCreate()\n\n# Load the CSV file into a Spark DataFrame\ndf = spark.read.option(\"header\", \"true\").option(\"inferSchema\", \"true\").option(\"multiLine\",\"true\").option(\"escape\", \"\\\"\").csv(\"../data/lightcast_job_postings.csv\")\n\n# Register the DataFrame as a temporary SQL view\ndf.createOrReplaceTempView(\"project_data\")\n\n\ncolumns_to_drop = [\n    \"ID\", \"URL\", \"ACTIVE_URLS\", \"DUPLICATES\", \"LAST_UPDATED_TIMESTAMP\",\n    \"NAICS2\", \"NAICS3\", \"NAICS4\", \"NAICS5\", \"NAICS6\",\n    \"SOC_2\", \"SOC_3\", \"SOC_5\"\n]\ncleaned_data = df.drop(columns=columns_to_drop, inplace=True)"
+  }
+]
