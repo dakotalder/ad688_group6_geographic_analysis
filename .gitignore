@@ -207,4 +207,4 @@ marimo/_lsp/
 __marimo__/
 
 #Removing large Datasets
-data/lightcast_job_postings.csv
+ad688_group6_geographic_analysis/data/lightcast_job_postings.csv
