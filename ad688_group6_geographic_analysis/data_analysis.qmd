@@ -97,10 +97,22 @@ msno.heatmap(clean_pdf)
 plt.title("Missing Values Heatmap")
 plt.show()
 
-fill_cols = ["CITY_NAME", "CITY", "LOCATION", "STATE", "STATE_NAME", "MSA", "MSA_NAME", "COMPANY", "COMPANY_NAME"]
+fill_cols = ["CITY_NAME", "CITY", "LOCATION", "STATE", "STATE_NAME", "COMPANY", "COMPANY_NAME"]
 clean_pdf[fill_cols] = clean_pdf[fill_cols].fillna("Unknown", inplace=True)
+
+clean_pdf = clean_pdf.drop_duplicates(subset=["TITLE", "COMPANY", "LOCATION", "POSTED"], keep="first")
 
 clean_pdf.dropna(thresh=len(clean_pdf)*0.5, axis=1, inplace=True)
 
-clean_pdf = clean_pdf.drop_duplicates(subset=["TITLE", "COMPANY", "LOCATION", "POSTED"], keep="first")
+
+```
+
+```{python}
+#Data Visualization for AI Job Growth
+
+
+
+
+
+
 ```
