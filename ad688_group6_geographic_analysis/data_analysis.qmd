@@ -42,6 +42,7 @@ df.createOrReplaceTempView("project_data")
 
 ```{python}
 import pandas as pd
+from pyspark.sql.functions import when, col
 
 #Clean Data to convert to Pandas
 columns_to_drop = ["ID", "BODY", "URL", "ACTIVE_URLS", "DUPLICATES", "LAST_UPDATED_TIMESTAMP",
@@ -51,6 +52,31 @@ columns_to_drop = ["ID", "BODY", "URL", "ACTIVE_URLS", "DUPLICATES", "LAST_UPDAT
     
 ]
 cleaned_data = df.drop(*columns_to_drop)
+
+cleaned_data = cleaned_data.withColumn(
+    "REMOTE_TYPE_NAME",
+    when(col("REMOTE_TYPE_NAME") == "Remote", "Remote")
+    .when(col("REMOTE_TYPE_NAME") == "Hybrid Remote", "Hybrid")
+    .when(col("REMOTE_TYPE_NAME") == "[None]", "On-site")
+    .when(col("REMOTE_TYPE_NAME").isNull(), "On-site")
+    .when(col("REMOTE_TYPE_NAME") == "Not Remote", "On-site")
+    .otherwise(col("REMOTE_TYPE_NAME"))
+)
+
+cleaned_data = cleaned_data.withColumn(
+    "EMPLOYMENT_TYPE_NAME",
+    when(col("EMPLOYMENT_TYPE_NAME") == "Part-time / full-time", "Flexible")
+    .when(col("EMPLOYMENT_TYPE_NAME").isNull(), "Full-Time")
+    .when(col("EMPLOYMENT_TYPE_NAME") == "Part-time (â‰¤ 32 hours)", "Part-Time")
+    .when(col("EMPLOYMENT_TYPE_NAME") == "Full-time (> 32 hours)", "Full-Time")
+    .otherwise(col("EMPLOYMENT_TYPE_NAME")) 
+)
+
+median_salary = cleaned_data.approxQuantile("SALARY", [0.5], 0.01)[0]
+cleaned_data = cleaned_data.withColumn(
+    "SALARY",
+    when(col("SALARY").isNull(), median_salary).otherwise(col("SALARY"))
+)
 
 clean_pdf = cleaned_data.toPandas()
 
@@ -68,9 +94,6 @@ import matplotlib.pyplot as plt
 msno.heatmap(clean_pdf)
 plt.title("Missing Values Heatmap")
 plt.show()
-
-#Salary has more than 50% empty rows, so filling first
-clean_pdf["SALARY"].fillna(clean_pdf["SALARY"].median(), inplace=True)
 
 fill_cols = ["CITY_NAME", "CITY", "LOCATION", "STATE", "STATE_NAME", "MSA", "MSA_NAME", "COMPANY", "COMPANY_NAME"]
 clean_pdf[fill_cols] = clean_pdf[fill_cols].fillna("Unknown", inplace=True)
