@@ -27,6 +27,7 @@ format:
 ```{python}
 from pyspark.sql import SparkSession
 
+
 # Start a Spark session
 spark = SparkSession.builder.appName("JobPostingsAnalysis").getOrCreate()
 
@@ -37,29 +38,44 @@ df = spark.read.option("header", "true").option("inferSchema", "true").option("m
 df.createOrReplaceTempView("project_data")
 
 
-
 ```
 
 ```{python}
-columns_to_drop = [
-    "ID", "URL", "ACTIVE_URLS", "DUPLICATES", "LAST_UPDATED_TIMESTAMP",
+import pandas as pd
+
+#Clean Data to convert to Pandas
+columns_to_drop = ["ID", "BODY", "URL", "ACTIVE_URLS", "DUPLICATES", "LAST_UPDATED_TIMESTAMP",
     "NAICS2", "NAICS3", "NAICS4", "NAICS5", "NAICS6",
-    "SOC_2", "SOC_3", "SOC_5"
+    "SOC_2", "SOC_3", "SOC_4", "SOC_5", "LAST_UPDATED_DATE", "LAST_UPDATED_TIMESTAMP", "POSTED", "EXPIRED", "SOURCE_TYPES", "SOURCES", "ACTIVE_SOURCES_INFO", "MODELED_EXPIRED", "MODELED_DURATION", "NAICS2_NAME", "NAICS3_NAME", "NAICS4_NAME", "NAICS5_NAME", "NAICS6_NAME",
+    "SOC_2_NAME", "SOC_3_NAME", "SOC_4_NAME", "SOC_5_NAME"
+    
 ]
-cleaned_data = df.drop(columns=columns_to_drop, inplace=True)
+cleaned_data = df.drop(*columns_to_drop)
+
+clean_pdf = cleaned_data.toPandas()
+
+print(clean_pdf.columns)
 
 ```
 
 ```{python}
 #| echo: true
 #| eval: true
-
 import missingno as msno
+import matplotlib.pyplot as plt
 
-#Visualize Missing Data
-msno.heatmap(cleaned_data)
+# Visualize missing data
+msno.heatmap(clean_pdf)
 plt.title("Missing Values Heatmap")
 plt.show()
+
+clean_pdf.dropna(thresh=len(clean_pdf)*0.5, axis=1, inplace=True)
+
+clean_pdf["SALARY"].fillna(clean_pdf["SALARY"].median(), inplace=True)
+
+fill_cols = ["CITY NAME", "CITY", "LOCATION", "STATE", "STATE_NAME", "MSA", "MSA_NAME", "COMPANY", "COMPANY_NAME"]
+clean_pdf[fill_cols] = clean_pdf[fill_cols].fillna("Unknown", inplace=True)
+
 
 
 ```

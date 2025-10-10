@@ -14,6 +14,12 @@ website:
       - href: careers.qmd
         text: Career Strategy
       - about.qmd
+execute:
+  echo: true
+  cache: true
+  freeze: auto
+  kernal: python3
+  keep-session: true
 
 format:
   html:
