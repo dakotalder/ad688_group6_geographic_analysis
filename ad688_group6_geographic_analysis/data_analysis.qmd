@@ -108,10 +108,21 @@ clean_pdf.dropna(thresh=len(clean_pdf)*0.5, axis=1, inplace=True)
 ```
 
 ```{python}
-#Data Visualization for AI Job Growth
+#New Column to Classify AI Jobs
 
+ai_keywords = [
+    "AI", "Machine Learning", "Data Scientist", "Data Analyst", "ML", 
+    "Artificial Intelligence", "Deep Learning", "NLP", "Predictive Analytics", "Automation", "Robotics", "Analyst", "Data"
+]
 
+def classify_ai(title):
+    title_lower = str(title).lower()
+    for keyword in ai_keywords:
+        if keyword.lower() in title_lower:
+            return "AI"
+    return "Non-AI"
 
+clean_pdf["AI_JOB"] = clean_pdf["TITLE"].apply(classify_ai)
 
 
 
