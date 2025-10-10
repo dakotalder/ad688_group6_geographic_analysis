@@ -72,6 +72,8 @@ cleaned_data = cleaned_data.withColumn(
     .otherwise(col("EMPLOYMENT_TYPE_NAME")) 
 )
 
+cleaned_data = cleaned_data.filter(col("NAICS_2022_2_NAME") != "Unclassified Industry")
+
 median_salary = cleaned_data.approxQuantile("SALARY", [0.5], 0.01)[0]
 cleaned_data = cleaned_data.withColumn(
     "SALARY",
@@ -100,5 +102,5 @@ clean_pdf[fill_cols] = clean_pdf[fill_cols].fillna("Unknown", inplace=True)
 
 clean_pdf.dropna(thresh=len(clean_pdf)*0.5, axis=1, inplace=True)
 
-clean_pdf = clean_pdf.drop_duplicates(subset=["TITLE", "COMPANY", "LOCATTION", "POSTED"], keep="first")
+clean_pdf = clean_pdf.drop_duplicates(subset=["TITLE", "COMPANY", "LOCATION", "POSTED"], keep="first")
 ```
