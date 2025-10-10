@@ -49,3 +49,17 @@ columns_to_drop = [
 cleaned_data = df.drop(columns=columns_to_drop, inplace=True)
 
 ```
+
+```{python}
+#| echo: true
+#| eval: true
+
+import missingno as msno
+
+#Visualize Missing Data
+msno.heatmap(cleaned_data)
+plt.title("Missing Values Heatmap")
+plt.show()
+
+
+```
