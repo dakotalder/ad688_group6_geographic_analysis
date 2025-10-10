@@ -54,7 +54,7 @@ cleaned_data = df.drop(*columns_to_drop)
 
 clean_pdf = cleaned_data.toPandas()
 
-print(clean_pdf.columns)
+
 
 ```
 
@@ -69,13 +69,13 @@ msno.heatmap(clean_pdf)
 plt.title("Missing Values Heatmap")
 plt.show()
 
-clean_pdf.dropna(thresh=len(clean_pdf)*0.5, axis=1, inplace=True)
-
+#Salary has more than 50% empty rows, so filling first
 clean_pdf["SALARY"].fillna(clean_pdf["SALARY"].median(), inplace=True)
 
-fill_cols = ["CITY NAME", "CITY", "LOCATION", "STATE", "STATE_NAME", "MSA", "MSA_NAME", "COMPANY", "COMPANY_NAME"]
+fill_cols = ["CITY_NAME", "CITY", "LOCATION", "STATE", "STATE_NAME", "MSA", "MSA_NAME", "COMPANY", "COMPANY_NAME"]
 clean_pdf[fill_cols] = clean_pdf[fill_cols].fillna("Unknown", inplace=True)
 
+clean_pdf.dropna(thresh=len(clean_pdf)*0.5, axis=1, inplace=True)
 
 
 ```
