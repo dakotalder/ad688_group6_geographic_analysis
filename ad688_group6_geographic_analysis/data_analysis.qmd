@@ -125,10 +125,13 @@ def classify_ai(title):
 
 clean_pdf["AI_JOB"] = clean_pdf["TITLE_RAW"].apply(classify_ai)
 
-clean_pdf.head(25)
-
 clean_pdf["POSTED"] = pd.to_datetime(clean_pdf["POSTED"], errors="coerce")
 clean_pdf["POSTED_MONTH"] = clean_pdf["POSTED"].dt.month
+
+clean_pdf.head(25)
+```
+
+```{python}
 
 
 ```
