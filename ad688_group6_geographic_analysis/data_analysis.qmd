@@ -47,7 +47,7 @@ from pyspark.sql.functions import when, col
 #Clean Data to convert to Pandas
 columns_to_drop = ["ID", "BODY", "URL", "ACTIVE_URLS", "DUPLICATES", "LAST_UPDATED_TIMESTAMP",
     "NAICS2", "NAICS3", "NAICS4", "NAICS5", "NAICS6",
-    "SOC_2", "SOC_3", "SOC_4", "SOC_5", "LAST_UPDATED_DATE", "LAST_UPDATED_TIMESTAMP", "POSTED", "EXPIRED", "SOURCE_TYPES", "SOURCES", "ACTIVE_SOURCES_INFO", "MODELED_EXPIRED", "MODELED_DURATION", "NAICS2_NAME", "NAICS3_NAME", "NAICS4_NAME", "NAICS5_NAME", "NAICS6_NAME",
+    "SOC_2", "SOC_3", "SOC_4", "SOC_5", "LAST_UPDATED_DATE", "LAST_UPDATED_TIMESTAMP", "EXPIRED", "SOURCE_TYPES", "SOURCES", "ACTIVE_SOURCES_INFO", "MODELED_EXPIRED", "MODELED_DURATION", "NAICS2_NAME", "NAICS3_NAME", "NAICS4_NAME", "NAICS5_NAME", "NAICS6_NAME",
     "SOC_2_NAME", "SOC_3_NAME", "SOC_4_NAME", "SOC_5_NAME", "EDUCATION_LEVELS", "MIN_EDULEVELS"
     
 ]
@@ -100,5 +100,5 @@ clean_pdf[fill_cols] = clean_pdf[fill_cols].fillna("Unknown", inplace=True)
 
 clean_pdf.dropna(thresh=len(clean_pdf)*0.5, axis=1, inplace=True)
 
-clean_pdf.head()
+clean_pdf = clean_pdf.drop_duplicates(subset=["TITLE", "COMPANY", "LOCATTION", "POSTED"], keep="first")
 ```
