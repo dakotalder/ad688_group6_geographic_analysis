@@ -229,26 +229,23 @@ plt.show()
 ```{python}
 #Question 2: Are remote jobs increasing or decreasing across industries?
 
+remote_only = clean_pdf[clean_pdf["REMOTE_TYPE_NAME"] == "Remote"]
+
 remote_growth = (
-  clean_pdf.groupby(["NAICS_2022_2_NAME", "POSTED_MONTH", "REMOTE_TYPE_NAME"])
+  remote_only.groupby(["NAICS_2022_2_NAME", "POSTED_MONTH"])
   .size()
   .reset_index(name="count")
 )
 
-remote_growth["GROWTH"] = (
-  remote_growth
-  .groupby(["NAICS_2022_2_NAME", "REMOTE_TYPE_NAME"])["count"]
-  .pct_change() * 100
-)
 
-top_10_industries = (
-  clean_pdf["NAICS_2022_2_NAME"]
+top_5_industries = (
+  remote_only["NAICS_2022_2_NAME"]
   .value_counts()
-  .head(10)
+  .head(5)
   .index
 )
 
-top_remote_growth = remote_growth[remote_growth["NAICS_2022_2_NAME"].isin(top_10_industries)]
+top_remote_growth = remote_growth[remote_growth["NAICS_2022_2_NAME"].isin(top_5_industries)]
 
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -258,14 +255,12 @@ sns.lineplot(
     data=top_remote_growth,
     x="POSTED_MONTH",
     y="count",
-    hue="REMOTE_TYPE_NAME",
-    style="NAICS_2022_2_NAME",
-    markers=True
+    hue="NAICS_2022_2_NAME"
 )
 plt.title("Remote Job Trends Across Top 10 Industries")
 plt.xlabel("Month")
 plt.ylabel("Number of Job Postings")
-plt.legend(title="Remote Type / Industry", bbox_to_anchor=(1.05, 1), loc='upper left')
+plt.legend(title="Industry", bbox_to_anchor=(1.05, 1), loc='upper left')
 plt.tight_layout()
 plt.show()
 
