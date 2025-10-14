@@ -80,6 +80,7 @@ cleaned_data = cleaned_data.withColumn(
     when(col("SALARY").isNull(), median_salary).otherwise(col("SALARY"))
 )
 
+
 clean_pdf = cleaned_data.toPandas()
 
 
@@ -98,7 +99,7 @@ plt.title("Missing Values Heatmap")
 plt.show()
 
 fill_cols = ["CITY_NAME", "CITY", "LOCATION", "STATE", "STATE_NAME", "COMPANY", "COMPANY_NAME"]
-clean_pdf[fill_cols] = clean_pdf[fill_cols].fillna("Unknown", inplace=True)
+clean_pdf[fill_cols] = clean_pdf[fill_cols].fillna("Unknown")
 
 clean_pdf = clean_pdf.drop_duplicates(subset=["TITLE", "COMPANY", "LOCATION", "POSTED"], keep="first")
 
@@ -116,6 +117,7 @@ ai_keywords = [
     "Artificial Intelligence", "Deep Learning", "NLP", "Predictive Analytics", "Automation", "Robotics", "Analyst", "Data"
 ]
 
+#Function to classify AI vs Non-AI Jobs
 def classify_ai(title):
     title_lower = str(title).lower()
     for keyword in ai_keywords:
@@ -132,6 +134,89 @@ clean_pdf.head(25)
 ```
 
 ```{python}
+print(clean_pdf.columns.tolist())
+```
+
+```{python}
+#Question 1 Visualization: Which Cities or States have the highest job growth for AI vs Non-AI
+
+count_by_month_state = (
+  clean_pdf.groupby(["STATE_NAME", "POSTED_MONTH", "AI_JOB"])
+  .size()
+  .reset_index(name="count")
+)
+
+count_by_month_city = (
+  clean_pdf.groupby(["CITY_NAME", "POSTED_MONTH", "AI_JOB"])
+  .size()
+  .reset_index(name="count")
+)
+
+#Measure job growth by State and then by city
+count_by_month_state = count_by_month_state.sort_values(["STATE_NAME", "AI_JOB", "POSTED_MONTH"])
+count_by_month_state["GROWTH"] = (
+  count_by_month_state
+  .groupby(["STATE_NAME", "AI_JOB"])["count"]
+  .pct_change() * 100
+)
+
+count_by_month_city = count_by_month_city.sort_values(["CITY_NAME", "AI_JOB", "POSTED_MONTH"])
+count_by_month_city["GROWTH"] = (
+  count_by_month_city
+  .groupby(["CITY_NAME", "AI_JOB"])["count"]
+  .pct_change() * 100
+)
+
+avg_growth_state = (
+    count_by_month_state.groupby(["STATE_NAME", "AI_JOB"])["GROWTH"]
+    .mean()
+    .reset_index()
+    .dropna()
+    .sort_values("GROWTH", ascending=False)
+)
+
+avg_growth_city = (
+    count_by_month_city.groupby(["CITY_NAME", "AI_JOB"])["GROWTH"]
+    .mean()
+    .reset_index()
+    .dropna()
+    .sort_values("GROWTH", ascending=False)
+)
+
+print("Top 10 States by AI Job Growth:")
+print(avg_growth_state[avg_growth_state["AI_JOB"] == "AI"].head(10))
+
+print("\nTop 10 States by Non-AI Job Growth:")
+print(avg_growth_state[avg_growth_state["AI_JOB"] == "Non-AI"].head(10))
+
+print("Top 10 Cities by AI Job Growth:")
+print(avg_growth_city[avg_growth_city["AI_JOB"] == "AI"].head(10))
+
+print("\nTop 10 Cities by Non-AI Job Growth:")
+print(avg_growth_city[avg_growth_city["AI_JOB"] == "Non-AI"].head(10))
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+state_visual = avg_growth_state.groupby("AI_JOB").head(10)
+
+plt.figure(figsize=(10,6))
+sns.barplot(data=state_visual, y="STATE_NAME", x="GROWTH", hue="AI_JOB")
+plt.title("Top 10 States by Average Monthly Job Growth: AI vs Non-AI")
+plt.xlabel("Average Monthly Growth (%)")
+plt.ylabel("State")
+plt.tight_layout()
+plt.show()
+
+city_visual = avg_growth_city.groupby("AI_JOB").head(10)
+
+plt.figure(figsize=(10,6))
+sns.barplot(data=city_visual, y="CITY_NAME", x="GROWTH", hue="AI_JOB")
+plt.title("Top 10 Cities by Average Monthly Job Growth: AI vs Non-AI")
+plt.xlabel("Average Monthly Growth (%)")
+plt.ylabel("City")
+plt.tight_layout()
+plt.show()
 
 
 ```
