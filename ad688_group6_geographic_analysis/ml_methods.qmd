@@ -30,8 +30,6 @@ spark = SparkSession.builder.appName("JobPostingsAnalysis").getOrCreate()
 # Load the CSV file into a Spark DataFrame
 df = spark.read.option("header", "true").option("inferSchema", "true").option("multiLine","true").option("escape", "\"").csv("../data/lightcast_job_postings.csv")
 
-# Register the DataFrame as a temporary SQL view
-df.createOrReplaceTempView("project_data")
 
 
 ```
@@ -175,7 +173,10 @@ plt.show()
 
 cluster_summary.head(20)  # Show top 20 to see patterns
 
-#Visualize the KMeans Model
+one_hot_cols = ['AI_JOB_Non-AI', 'REMOTE_TYPE_NAME_On-site', 'REMOTE_TYPE_NAME_Remote', 'URBAN_RURAL_Urban']
+
+clean_pdf = pd.concat([clean_pdf, features_encoded[one_hot_cols]], axis=1)
+
 
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -184,14 +185,14 @@ plt.figure(figsize=(10,6))
 sns.scatterplot(
     data=clean_pdf,
     x='SALARY',
-    y='AI_JOB_AI',  
+    y='REMOTE_TYPE_NAME_Remote',  
     hue='CLUSTER',
     palette='viridis',
     alpha=0.7
 )
-plt.title("KMeans Clustering: Salary vs AI Job")
+plt.title("KMeans Clustering: Salary vs Remote Type")
 plt.xlabel("Salary")
-plt.ylabel("AI Job (1=AI, 0=Non-AI)")
+plt.ylabel("Remote Type (1=Remote, 0=On-Site)")
 plt.legend(title="Cluster")
 plt.tight_layout()
 plt.show()
