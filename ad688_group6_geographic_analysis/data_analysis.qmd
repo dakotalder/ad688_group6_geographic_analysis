@@ -320,3 +320,46 @@ plt.show()
 
 
 ```
+
+```{python}
+# Question 4: How do Urban vs. Rural Job markets differ for AI and non-AI careers?
+
+# Classify as 'Urban' if MSA_NAME is present, else 'Rural'
+clean_pdf["URBAN_RURAL"] = clean_pdf["MSA_NAME"].apply(lambda x: "Urban" if pd.notnull(x) else "Rural")
+
+# Group data by month, urban/rural, and AI vs Non-AI
+urban_rural_jobs = (
+    clean_pdf.groupby(["URBAN_RURAL", "AI_JOB"])
+    .size()
+    .reset_index(name="count")
+)
+
+#Calculate percentages
+urban_rural_jobs["PERCENT"] = (
+  urban_rural_jobs.groupby("AI_JOB")["count"]
+  .apply(lambda x: 100 * x / x.sum())
+  .values
+)
+
+# Visualization
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+plt.figure(figsize=(12, 6))
+sns.barplot(
+    data=urban_rural_jobs,
+    x="URBAN_RURAL",
+    y="count",
+    hue="AI_JOB"
+)
+
+plt.title("AI vs Non-AI Jobs in Urban vs Rural Areas")
+plt.xlabel("Urban or Rural")
+plt.ylabel("Number of Job Postings")
+plt.legend(title="Job Type")
+plt.tight_layout()
+plt.show()
+
+print(urban_rural_jobs)
+
+```
