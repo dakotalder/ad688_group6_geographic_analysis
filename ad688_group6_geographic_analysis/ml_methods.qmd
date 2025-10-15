@@ -24,7 +24,6 @@ format:
 ```{python}
 from pyspark.sql import SparkSession
 
-
 # Start a Spark session
 spark = SparkSession.builder.appName("JobPostingsAnalysis").getOrCreate()
 
