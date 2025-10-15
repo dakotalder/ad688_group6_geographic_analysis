@@ -1,7 +1,27 @@
 ---
-title: "ad688_group6_geographic_analysis"
+title: "Project Overview"
 ---
+# Introduction and Research Rationale
 
-This is a Quarto website.
+Artificial intelligence, also known as AI, is redefining the labor market, shaping not only how work is done but also where work is done. As businesses adopt AI-driven tools and automation, demand for data science, machine learning, and software roles continues to grow, while routine administrative and operational jobs decline (Gruetzemacher & Whittlestone, 2022; Chui & Francisco, 2017). This recent shift has created a new geography of employment, where technological infrastructure and remote work options play central roles.
 
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+Remote work, accelerated by the COVID-19 pandemic and continued by companies adoption of this practice, has ereated more high-wage, skill-based positions. However, the benefits of this expansion are unevenly distributed as we will see in our analysis. Traditional technology hubs such as Silicon Valley, Austin, and Boston continue to hire a high number of tech/AI affected roles, while smaller metro areas and rural communities face challenges in attracting and retaining AI-related talent (Bughin et al., 2017; Dwivedi et al., 2021). At the same time, our data shows that remote and hybrid work models are allowing some decentralization, offering emerging regions new opportunities for growth.
+
+This research analyzes how AI roles and other non-AI roles may be affected by geographic and remote work trends in 2025. The study investigates which states and urban areas demonstrate the highest job growth in AI versus non-AI careers, whether remote positions are increasing across industries, and how urban and rural job markets differ in AI accessibility. Based on our research, it is expected that AI roles will remain concentrated in tech-oriented regions, but it also seems that other non traditional metro areas may be seeing growth not previously seen. Also, remote work is anticipated to remain more prevalent in AI and technology fields, as well as higher salaries in both AI related jobs and remote jobs. Below are the main focal points of our research:
+
+
+## AI vs. Non-AI Job Growth
+
+Preliminary findings indicate that AI-related positions show the strongest concentration in technology-intensive states such as California, Washington, and Massachusetts. However, states like Utah, North Carolina, and Colorado show rising growth rates, suggesting decentralization from traditional hubs. In contrast, non-AI jobs remain more evenly distributed, with steady growth across states with large service or manufacturing economies.
+
+## Trends in Remote Work Across Industries
+
+Remote job listings continue to represent a significant share of AI-related careers, especially in data analysis, software engineering, and research roles. Industries such as finance, education technology, and digital media also maintain high remote participation. Conversely, healthcare, logistics, and manufacturing remain predominantly on-site. Overall, remote opportunities appear to be stabilizing rather than growing, signaling a post-pandemic normalization.
+
+## Tech Hubs vs. Emerging Locations
+
+While legacy tech hubs liek Silicon Valley, Austin, Boston, and Seattle still dominate total AI job volume, emerging markets are gaining ground. Cities such as Salt Lake City, Denver, and Raleigh-Durham show rapid AI job growth relative to population, aided by remote hiring and migration of skilled workers. This suggests that distributed innovation ecosystems are replacing the singular dominance of coastal tech centers.
+
+## Urban vs. Rural Dynamics
+
+Urban regions continue to host the majority of AI employment due to their access to universities, data infrastructure, and venture capital. However, remote work options are beginning to bridge the urban-rural divide, allowing rural professionals to participate in digital industries without relocating. Rural job markets, while smaller, show higher proportions of non-AI and on-site work, reflecting continued dependence on physical industries and public sector employment.
