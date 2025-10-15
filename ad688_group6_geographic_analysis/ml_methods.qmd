@@ -1,0 +1,125 @@
+---
+title: "Machine Learning Methods"
+subtitle: "Regression, Classification, Topic Insights"
+author:
+  - name: Dakota Alder
+    affiliations:
+      - id: bu
+        name: Boston University
+        city: Boston
+        state: MA
+  - name: Julio Garcia
+    affiliations:
+      - id: bu
+        name: Boston University
+        city: Boston
+        state: MA
+format: 
+  html:
+    toc: true
+    number-sections: true
+    df-print: paged
+---
+
+```{python}
+from pyspark.sql import SparkSession
+
+
+# Start a Spark session
+spark = SparkSession.builder.appName("JobPostingsAnalysis").getOrCreate()
+
+# Load the CSV file into a Spark DataFrame
+df = spark.read.option("header", "true").option("inferSchema", "true").option("multiLine","true").option("escape", "\"").csv("../data/lightcast_job_postings.csv")
+
+# Register the DataFrame as a temporary SQL view
+df.createOrReplaceTempView("project_data")
+
+
+```
+
+```{python}
+import pandas as pd
+from pyspark.sql.functions import when, col
+
+#Clean Data to convert to Pandas
+columns_to_drop = ["ID", "BODY", "URL", "ACTIVE_URLS", "DUPLICATES", "LAST_UPDATED_TIMESTAMP",
+    "NAICS2", "NAICS3", "NAICS4", "NAICS5", "NAICS6",
+    "SOC_2", "SOC_3", "SOC_4", "SOC_5", "LAST_UPDATED_DATE", "LAST_UPDATED_TIMESTAMP", "EXPIRED", "SOURCE_TYPES", "SOURCES", "ACTIVE_SOURCES_INFO", "MODELED_EXPIRED", "MODELED_DURATION", "NAICS2_NAME", "NAICS3_NAME", "NAICS4_NAME", "NAICS5_NAME", "NAICS6_NAME",
+    "SOC_2_NAME", "SOC_3_NAME", "SOC_4_NAME", "SOC_5_NAME", "EDUCATION_LEVELS", "MIN_EDULEVELS"
+    
+]
+cleaned_data = df.drop(*columns_to_drop)
+
+cleaned_data = cleaned_data.withColumn(
+    "REMOTE_TYPE_NAME",
+    when(col("REMOTE_TYPE_NAME") == "Remote", "Remote")
+    .when(col("REMOTE_TYPE_NAME") == "Hybrid Remote", "Hybrid")
+    .when(col("REMOTE_TYPE_NAME") == "[None]", "On-site")
+    .when(col("REMOTE_TYPE_NAME").isNull(), "On-site")
+    .when(col("REMOTE_TYPE_NAME") == "Not Remote", "On-site")
+    .otherwise(col("REMOTE_TYPE_NAME"))
+)
+
+cleaned_data = cleaned_data.withColumn(
+    "EMPLOYMENT_TYPE_NAME",
+    when(col("EMPLOYMENT_TYPE_NAME") == "Part-time / full-time", "Flexible")
+    .when(col("EMPLOYMENT_TYPE_NAME").isNull(), "Full-Time")
+    .when(col("EMPLOYMENT_TYPE_NAME") == "Part-time (â‰¤ 32 hours)", "Part-Time")
+    .when(col("EMPLOYMENT_TYPE_NAME") == "Full-time (> 32 hours)", "Full-Time")
+    .otherwise(col("EMPLOYMENT_TYPE_NAME")) 
+)
+
+cleaned_data = cleaned_data.filter(col("NAICS_2022_2_NAME") != "Unclassified Industry")
+
+median_salary = cleaned_data.approxQuantile("SALARY", [0.5], 0.01)[0]
+cleaned_data = cleaned_data.withColumn(
+    "SALARY",
+    when(col("SALARY").isNull(), median_salary).otherwise(col("SALARY"))
+)
+
+
+clean_pdf = cleaned_data.toPandas()
+
+
+
+```
+
+```{python}
+#| echo: true
+#| eval: true
+# Cleaning empty columns and dropping columns that are mostly empty
+
+
+fill_cols = ["CITY_NAME", "CITY", "LOCATION", "STATE", "STATE_NAME", "COMPANY", "COMPANY_NAME"]
+clean_pdf[fill_cols] = clean_pdf[fill_cols].fillna("Unknown")
+
+clean_pdf = clean_pdf.drop_duplicates(subset=["TITLE", "COMPANY", "LOCATION", "POSTED"], keep="first")
+
+clean_pdf.dropna(thresh=len(clean_pdf)*0.5, axis=1, inplace=True)
+
+
+```
+
+```{python}
+#New Column to Classify AI Jobs and Add Month of Posting Date
+
+
+ai_keywords = [
+    "AI", "Machine Learning", "Data Scientist", "Data Analyst", "ML", 
+    "Artificial Intelligence", "Deep Learning", "NLP", "Predictive Analytics", "Automation", "Robotics", "Analyst", "Data"
+]
+
+#Function to classify AI vs Non-AI Jobs
+def classify_ai(title):
+    title_lower = str(title).lower()
+    for keyword in ai_keywords:
+        if keyword.lower() in title_lower:
+            return "AI"
+    return "Non-AI"
+
+clean_pdf["AI_JOB"] = clean_pdf["TITLE_RAW"].apply(classify_ai)
+
+clean_pdf["POSTED"] = pd.to_datetime(clean_pdf["POSTED"], errors="coerce")
+clean_pdf["POSTED_MONTH"] = clean_pdf["POSTED"].dt.month
+
+```
