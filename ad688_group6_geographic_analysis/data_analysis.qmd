@@ -265,3 +265,35 @@ plt.tight_layout()
 plt.show()
 
 ```
+
+```{python}
+#Question #3: Do Tech hubs (Silicon Valley, Austin, Boston) still dominate hiring, or are other locations emerging?
+
+tech_hubs = ["Austin-Round Rock-Georgetown, TX", "Boston-Cambridge-Newton, MA-NH","Los Angeles-Long Beach-Anaheim, CA","San Diego-Chula Vista-Carlsbad, CA","San Francisco-Oakland-Berkeley, CA","San Jose-Sunnyvale-Santa Clara, CA","Seattle-Tacoma-Bellevue, WA"]
+
+# Create a column classifying if the city is a tech hub
+clean_pdf["TECH_HUB"] = clean_pdf["MSA_NAME"].apply(lambda x: "Tech Hub" if x in tech_hubs else "Other")
+
+# Count of jobs by TECH_HUB
+tech_hub_growth = (
+    clean_pdf.groupby(["TECH_HUB"])
+    .size()
+    .reset_index(name="count")
+)
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+plt.figure(figsize=(12, 6))
+sns.lineplot(data=tech_hub_growth, x="TECH_HUB", y="count", markers=True)
+plt.title("Job Trends in Tech Hubs vs Other Locations")
+plt.xlabel("Location")
+plt.ylabel("Number of Job Postings")
+plt.tight_layout()
+plt.show()
+
+ 
+
+
+
+```
