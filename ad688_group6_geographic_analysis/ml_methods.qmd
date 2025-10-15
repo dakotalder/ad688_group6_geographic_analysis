@@ -77,9 +77,8 @@ cleaned_data = cleaned_data.withColumn(
     when(col("SALARY").isNull(), median_salary).otherwise(col("SALARY"))
 )
 
-
+#Convert to Pandas
 clean_pdf = cleaned_data.toPandas()
-
 
 
 ```
@@ -97,12 +96,7 @@ clean_pdf = clean_pdf.drop_duplicates(subset=["TITLE", "COMPANY", "LOCATION", "P
 
 clean_pdf.dropna(thresh=len(clean_pdf)*0.5, axis=1, inplace=True)
 
-
-```
-
-```{python}
 #New Column to Classify AI Jobs and Add Month of Posting Date
-
 
 ai_keywords = [
     "AI", "Machine Learning", "Data Scientist", "Data Analyst", "ML", 
@@ -121,5 +115,87 @@ clean_pdf["AI_JOB"] = clean_pdf["TITLE_RAW"].apply(classify_ai)
 
 clean_pdf["POSTED"] = pd.to_datetime(clean_pdf["POSTED"], errors="coerce")
 clean_pdf["POSTED_MONTH"] = clean_pdf["POSTED"].dt.month
+
+#Add column for URBAN vs RURAL
+
+clean_pdf["URBAN_RURAL"] = clean_pdf["MSA_NAME"].apply(lambda x: "Urban" if pd.notnull(x) else "Rural")
+
+```
+
+```{python}
+#KMeans clustering using NAICS as a reference but not a target
+
+from sklearn.preprocessing import StandardScaler
+
+# Select features
+features = clean_pdf[["SALARY", "AI_JOB", "REMOTE_TYPE_NAME", "URBAN_RURAL"]]
+
+# One-hot encode categorical columns
+features_encoded = pd.get_dummies(features, columns=["AI_JOB", "REMOTE_TYPE_NAME", "URBAN_RURAL"], drop_first=True)
+
+# Standardize numerical features (important for KMeans)
+scaler = StandardScaler()
+features_scaled = scaler.fit_transform(features_encoded)
+
+from sklearn.cluster import KMeans
+
+k = 4
+kmeans = KMeans(n_clusters=k, random_state=42)
+clean_pdf["CLUSTER"] = kmeans.fit_predict(features_scaled)
+
+#Use Industry Name (NAICS2022) as a reference label
+
+cluster_summary = (
+    clean_pdf.groupby(["CLUSTER", "NAICS_2022_2_NAME"])
+    .size()
+    .reset_index(name="count")
+    .sort_values(["CLUSTER", "count"], ascending=[True, False])
+)
+
+
+
+#Used an Elbow Method to choose the correct number of clusters
+
+from sklearn.cluster import KMeans
+import matplotlib.pyplot as plt
+
+# Example features
+X = features_encoded.values  # your numerical features
+
+wcss = []
+for k in range(1, 15):
+    km = KMeans(n_clusters=k, random_state=42)
+    km.fit(X)
+    wcss.append(km.inertia_)
+
+plt.plot(range(1, 15), wcss, marker='o')
+plt.xlabel('Number of Clusters (k)')
+plt.ylabel('WCSS (Inertia)')
+plt.title('Elbow Method')
+plt.show()
+
+cluster_summary.head(20)  # Show top 20 to see patterns
+
+#Visualize the KMeans Model
+
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+plt.figure(figsize=(10,6))
+sns.scatterplot(
+    data=clean_pdf,
+    x='SALARY',
+    y='AI_JOB_AI',  
+    hue='CLUSTER',
+    palette='viridis',
+    alpha=0.7
+)
+plt.title("KMeans Clustering: Salary vs AI Job")
+plt.xlabel("Salary")
+plt.ylabel("AI Job (1=AI, 0=Non-AI)")
+plt.legend(title="Cluster")
+plt.tight_layout()
+plt.show()
+
 
 ```
