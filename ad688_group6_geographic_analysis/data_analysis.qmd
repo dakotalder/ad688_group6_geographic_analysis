@@ -336,10 +336,14 @@ urban_rural_jobs = (
 
 #Calculate percentages
 urban_rural_jobs["PERCENT"] = (
-  urban_rural_jobs.groupby("AI_JOB")["count"]
+  urban_rural_jobs.groupby("URBAN_RURAL")["count"]
   .apply(lambda x: 100 * x / x.sum())
   .values
 )
+
+#Convert Percentage into 2 decimal places
+
+urban_rural_jobs["PERCENT"] = urban_rural_jobs["PERCENT"].apply(lambda x:f"{x:.2f}%")
 
 # Visualization
 import seaborn as sns
@@ -350,7 +354,8 @@ sns.barplot(
     data=urban_rural_jobs,
     x="URBAN_RURAL",
     y="count",
-    hue="AI_JOB"
+    hue="AI_JOB",
+    palette="viridis"
 )
 
 plt.title("AI vs Non-AI Jobs in Urban vs Rural Areas")
@@ -360,6 +365,28 @@ plt.legend(title="Job Type")
 plt.tight_layout()
 plt.show()
 
-print(urban_rural_jobs)
+fig, ax = plt.subplots(figsize=(7,4))  
+ax.axis('off') 
+
+table = ax.table(
+    cellText=urban_rural_jobs.values,
+    colLabels=urban_rural_jobs.columns,
+    cellLoc='center',
+    loc='center',
+    colColours=["#0b2545"]*len(urban_rural_jobs.columns),  # Dark blue header
+    colWidths=[0.3]*len(urban_rural_jobs.columns)
+)
+
+table.auto_set_font_size(False)
+table.set_fontsize(12)
+table.scale(1.2, 1.2) 
+
+for key, cell in table.get_celld().items():
+  if key[0] == 0:
+    cell.set_fontsize(14)
+    cell.set_text_props(color='white')
+    cell.set_facecolor('#0b2545')
+
+plt.show()
 
 ```
