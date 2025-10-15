@@ -272,32 +272,45 @@ plt.show()
 tech_hubs = ["Austin-Round Rock-Georgetown, TX", "Boston-Cambridge-Newton, MA-NH","Los Angeles-Long Beach-Anaheim, CA","San Diego-Chula Vista-Carlsbad, CA","San Francisco-Oakland-Berkeley, CA","San Jose-Sunnyvale-Santa Clara, CA","Seattle-Tacoma-Bellevue, WA"]
 
 # Create a column classifying if the city is a tech hub
-clean_pdf["TECH_HUB"] = clean_pdf["MSA_NAME"].apply(lambda x: "Tech Hub" if x in tech_hubs else "Other")
-
-# Count of jobs by TECH_HUB
-tech_hub_growth = (
-    clean_pdf.groupby(["TECH_HUB"])
-    .size()
-    .reset_index(name="count")
+clean_pdf["TECH_HUB"] = clean_pdf["MSA_NAME"].apply(
+    lambda x: "Tech Hub" if x in tech_hubs else "Other"
 )
+
+#Count number of postings by Tech Hub
+tech_hub_counts = (
+  clean_pdf.groupby("MSA_NAME")
+  .size()
+  .reset_index(name="count")
+  .sort_values("count", ascending=False)
+)
+
+# Merge to add TECH_HUB classification to each MSA
+tech_hub_counts = tech_hub_counts.merge(
+    clean_pdf[["MSA_NAME", "TECH_HUB"]].drop_duplicates(),
+    on="MSA_NAME",
+    how="left"
+)
+
 
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-plt.figure(figsize=(8, 5))
+plt.figure(figsize=(12, 8))
 sns.barplot(
-    data=tech_hub_growth,
-    x="TECH_HUB",
+    data=tech_hub_counts.head(15),
+    x="MSA_NAME",
     y="count",
+    hue="TECH_HUB",
     palette="viridis"
 )
-plt.title("Job Postings: Tech Hubs vs. Other Locations")
-plt.xlabel("Location Type")
+plt.title("Top 15 Metro Areas by Count of Job Postings")
+plt.xlabel("Tech Hub")
 plt.ylabel("Number of Job Postings")
+plt.xticks(rotation=60, ha="right")
 
 # Add labels on top of bars
-for i, row in tech_hub_growth.iterrows():
-    plt.text(i, row["count"], f"{row['count']:,}", ha="center", va="bottom", fontsize=10)
+for i, row in tech_hub_counts.head(15).iterrows():
+    plt.text(row["count"] + 100, i, f"{row['count']:,}", va="center", fontsize=10)
 
 plt.tight_layout()
 plt.show()
