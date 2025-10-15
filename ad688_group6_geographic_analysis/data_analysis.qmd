@@ -350,7 +350,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 plt.figure(figsize=(12, 6))
-sns.barplot(
+ax_urban = sns.barplot(
     data=urban_rural_jobs,
     x="URBAN_RURAL",
     y="count",
@@ -362,6 +362,9 @@ plt.title("AI vs Non-AI Jobs in Urban vs Rural Areas")
 plt.xlabel("Urban or Rural")
 plt.ylabel("Number of Job Postings")
 plt.legend(title="Job Type")
+
+for container in ax_urban.containers:
+  ax_urban.bar_label(container, fmt="%d", label_type="edge", padding=3, fontsize=11)
 plt.tight_layout()
 plt.show()
 
