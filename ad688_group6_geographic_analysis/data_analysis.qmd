@@ -114,7 +114,7 @@ clean_pdf.dropna(thresh=len(clean_pdf)*0.5, axis=1, inplace=True)
 
 ai_keywords = [
     "AI", "Machine Learning", "Data Scientist", "Data Analyst", "ML", 
-    "Artificial Intelligence", "Deep Learning", "NLP", "Predictive Analytics", "Automation", "Robotics", "Analyst", "Data"
+    "Artificial Intelligence", "Deep Learning", "NLP", "Predictive Analytics"
 ]
 
 #Function to classify AI vs Non-AI Jobs

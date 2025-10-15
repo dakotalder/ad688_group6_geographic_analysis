@@ -83,7 +83,7 @@ clean_pdf = cleaned_data.toPandas()
 ```{python}
 #| echo: true
 #| eval: true
-# Cleaning empty columns and dropping columns that are mostly empty
+# Cleaning empty rows and dropping columns that are mostly empty
 
 
 fill_cols = ["CITY_NAME", "CITY", "LOCATION", "STATE", "STATE_NAME", "COMPANY", "COMPANY_NAME"]
@@ -97,7 +97,7 @@ clean_pdf.dropna(thresh=len(clean_pdf)*0.5, axis=1, inplace=True)
 
 ai_keywords = [
     "AI", "Machine Learning", "Data Scientist", "Data Analyst", "ML", 
-    "Artificial Intelligence", "Deep Learning", "NLP", "Predictive Analytics", "Automation", "Robotics", "Analyst", "Data"
+    "Artificial Intelligence", "Deep Learning", "NLP", "Predictive Analytics"
 ]
 
 #Function to classify AI vs Non-AI Jobs
@@ -185,17 +185,48 @@ plt.figure(figsize=(10,6))
 sns.scatterplot(
     data=clean_pdf,
     x='SALARY',
-    y='REMOTE_TYPE_NAME_Remote',  
+    y='AI_JOB_Non-AI',  
     hue='CLUSTER',
     palette='viridis',
     alpha=0.7
 )
-plt.title("KMeans Clustering: Salary vs Remote Type")
+plt.title("KMeans Clustering: Salary vs AI Jobs")
 plt.xlabel("Salary")
-plt.ylabel("Remote Type (1=Remote, 0=On-Site)")
+plt.ylabel("AI JOB (1=Non-AI, 0=AI)")
 plt.legend(title="Cluster")
 plt.tight_layout()
 plt.show()
+
+
+```
+
+```{python}
+#Visualizing the NAICS Industries in reference to each cluster
+
+import matplotlib.pyplot as plt
+
+
+top_industries = (
+    clean_pdf.groupby(["CLUSTER", "NAICS_2022_6_NAME"])
+    .size()
+    .reset_index(name="count")
+)
+
+top3 = top_industries.groupby("CLUSTER").apply(lambda x: x.nlargest(3, "count")).reset_index(drop=True)
+
+
+pivot_df = top3.pivot(index="CLUSTER", columns="NAICS_2022_6_NAME", values="count").fillna(0)
+
+
+pivot_df.plot(kind='bar', stacked=True, figsize=(10,6), colormap='tab20')  
+
+plt.title("Top 3 Industries per Cluster")
+plt.xlabel("Cluster")
+plt.ylabel("Number of Job Postings")
+plt.legend(title="Industry", bbox_to_anchor=(1.05, 1), loc='upper left')
+plt.tight_layout()
+plt.show()
+
 
 
 ```
