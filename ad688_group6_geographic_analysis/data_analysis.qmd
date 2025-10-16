@@ -368,7 +368,7 @@ plt.show()
 
 ## Key Insights
 
-
+This plot is showing the concentration of job postings in each of the top 15 metro areas, which is interesting because the top 5 are actually not part of the tech hubs list that we created. Number 6, 7, 8, 11, and 15 are tech hubs, but this goes to show that a job seeker does not need to be in a tech hub for job searching. There are plenty of high population, metro areas that will have plenty of jobs. We would like to go further and look at industry and AI jobs as well, which is found in the next plot.
 
 # A Comparison of the Urban and Rural Job Market in relation to AI Careers
 
@@ -447,3 +447,6 @@ plt.show()
 
 ```
 
+## Key Insights
+
+This plot shows that the percentage of AI Jobs in Urban areas is actually almost exactly equal to the percentage of AI Jobs in rural areas. Even though the count of these types of jobs are much different, there are opportunities for job seekers to find AI related jobs at the same rate in rural areas compared to urban areas.
