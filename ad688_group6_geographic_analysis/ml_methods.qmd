@@ -124,14 +124,14 @@ clean_pdf["URBAN_RURAL"] = clean_pdf["MSA_NAME"].apply(lambda x: "Urban" if pd.n
 
 We applied KMeans clustering to identify patterns in the data. We wanted to each cluster to represent a group of jobs based on characteristics of Salary, AI jobs, remote work, and Urban or Rural locations. We used an elbow method to find the ideal number of clusters, which was 4, though the model didn't reflect as concise groupings as wanted.
 
-Features: 
+**Features:**  
 
-SALARY: Continuous numerical feature to reflect compensation.
-AI_JOB: Binary feature (AI vs Non-AI), one-hot encoded.
-REMOTE_TYPE_NAME: One-hot encoded categories (On-site, Remote, Hybrid).
+SALARY: Continuous numerical feature to reflect compensation.  
+AI_JOB: Binary feature (AI vs Non-AI), one-hot encoded.  
+REMOTE_TYPE_NAME: One-hot encoded categories (On-site, Remote, Hybrid).  
 URBAN_RURAL: One-hot encoded (Urban or Rural).
 
-Implications for Job Seekers
+**Implications for Job Seekers**  
 
 A job seeker can use this model to see what type of characteristics of a job might be tied to others. For example, AI jobs might yield high salaries, and if we used a reference of industry might be able to find an industry of interest that falls in a cluster that is being regarded in the job hunt. This can also be tied into the Skills Gap Analysis to see what a job seeker should work on in order to be considered for a certain cluster.
 
@@ -252,16 +252,16 @@ plt.show()
 ```
 
 
-# Key Insights
+## Key Insights
 
 Out of the 4 clusters, it seems like there are 3 fairly clear clusters and 1 that is more ambiguous.
 
-Cluster 0: The ambiguous one, doesn't seem to have any groupings along AI, Non-AI, and Salary.
-Cluster 1: This is a group of higher salary paid positions, but are grouped regardless of AI vs Non-AI.
-Cluster 2: These seem to be low paying, AI jobs.
-Cluster 3: These seem to be low paying Non-AI jobs.
+Cluster 0: The ambiguous one, doesn't seem to have any groupings along AI, Non-AI, and Salary.  
+Cluster 1: This is a group of higher salary paid positions, but are grouped regardless of AI vs Non-AI.  
+Cluster 2: These seem to be low paying, AI jobs.  
+Cluster 3: These seem to be low paying Non-AI jobs.  
 
-Industry Relationship:
+**Industry Relationship:**  
 
 It seems that the industries don't have as much of a bearing on each cluster. For example, we thought that the high paying clusters would be more tech industry focused, but the low paying cluster also has a large amount of job openings in the same industries. This may mean that salaries are most likely influenced less by Industry and AI impact and influenced more by Skills, seniority, and education.
 
@@ -270,14 +270,14 @@ It seems that the industries don't have as much of a bearing on each cluster. Fo
 
 We ran a linear regression model to predict job salaries based on location, remote status, and urban/rural classification. It estimates/predicts how location and job type impact salary. It’s useful for identifying which factors contribute to higher salaries and preferred work type.
 
-Features used:
+**Features used:**  
 
-STATE_NAME: One-hot encoded categorical variable representing each state.
-REMOTE_TYPE_NAME: One-hot encoded (Remote, Hybrid, On-site).
-URBAN_RURAL: One-hot encoded (Urban vs. Rural).
-Target variable: SALARY (numerical).
+STATE_NAME: One-hot encoded categorical variable representing each state.  
+REMOTE_TYPE_NAME: One-hot encoded (Remote, Hybrid, On-site).  
+URBAN_RURAL: One-hot encoded (Urban vs. Rural).  
+Target variable: SALARY (numerical).  
 
-Implications for job seekers:
+**Implications for job seekers:**  
 
 The model reveals which locations and job types may pay more, which is probably the most important consideration for job seekers.
 
@@ -337,11 +337,11 @@ plt.show()
 
 ```
 
-# Key Insights
+## Key Insights
 
-Evaulation Metrics: 
-RMSE: 29,689.15 
-R2: 0.006
+**Evaulation Metrics:**  
+RMSE: 29,689.15   
+R2: 0.006  
 
 These metrics are saying that our features are not very influential on the salary, meaning that there are most likely better predictors of Salary than geographical predictors. Like previously stated, things like seniority, education, and skills may be better predictors to higher or lower salaries.
 
