@@ -1,0 +1,24 @@
+{
+  "final_report.qmd": {
+    "final_report.docx": "efc29fca",
+    "final_report.html": "0f5ac25a"
+  },
+  "index.qmd": {
+    "index.html": "64c380a3",
+    "index.docx": "43ebd0a4"
+  },
+  "gap_analysis.qmd": {
+    "gap_analysis.html": "bfcc7007",
+    "gap_analysis.docx": "94d8df3d"
+  },
+  "about.qmd": {
+    "about.html": "4f8567dd"
+  },
+  "ml_methods.qmd": {
+    "ml_methods.html": "9aed09af",
+    "ml_methods.docx": "c15d20d1"
+  },
+  "data_analysis.qmd": {
+    "data_analysis.docx": "137855c2"
+  }
+}
