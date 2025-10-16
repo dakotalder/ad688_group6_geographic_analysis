@@ -329,7 +329,7 @@ tech_hub_counts = tech_hub_counts.merge(
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-plt.figure(figsize=(14, 8))
+plt.figure(figsize=(18, 15))
 sns.barplot(
     data=tech_hub_counts.head(15),
     x="MSA_NAME",
