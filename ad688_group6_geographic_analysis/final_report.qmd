@@ -17,7 +17,7 @@ format:
 ---
 
 
-{{< include index.qmd yaml=false >}}
-{{< include data_analysis.qmd yaml=false >}}
-{{< include gap_analysis.qmd yaml=false >}}
-{{< include ml_methods.qmd yaml=false >}}
+{{< include index.qmd >}}
+{{< include data_analysis.qmd >}}
+{{< include gap_analysis.qmd >}}
+{{< include ml_methods.qmd >}}
