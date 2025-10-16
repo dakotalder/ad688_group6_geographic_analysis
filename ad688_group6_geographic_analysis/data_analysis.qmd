@@ -2,18 +2,8 @@
 title: "Data Analysis"
 subtitle: "Comprehensive Data Cleaning & Exploratory Analysis of Geographic Data"
 author:
-  - name: Dakota Alder
-    affiliations:
-      - id: bu
-        name: Boston University
-        city: Boston
-        state: MA
-  - name: Julio Garcia
-    affiliations:
-      - id: bu
-        name: Boston University
-        city: Boston
-        state: MA
+  - Dakota Alder
+  - Julio Garcia
 #bibliography: references.bib
 #csl: csl/econometrica.csl
 format: 
@@ -339,7 +329,7 @@ tech_hub_counts = tech_hub_counts.merge(
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-plt.figure(figsize=(14, 8), constrained_layout=True)
+plt.figure(figsize=(14, 8))
 sns.barplot(
     data=tech_hub_counts.head(15),
     x="MSA_NAME",
@@ -360,11 +350,8 @@ for i, row in tech_hub_counts.head(15).iterrows():
 plt.savefig("../ad688_group6_geographic_analysis/images/top15techhubs.png", dpi=300)
 plt.show()
 
- 
-
-
-
 ```
+![Top 15 Tech Hubs](../ad688_group6_geographic_analysis/images/top15techhubs.png){fig-align="center" width="80%"}
 
 ## Key Insights
 

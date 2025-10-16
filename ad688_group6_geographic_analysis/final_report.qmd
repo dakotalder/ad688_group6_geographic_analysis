@@ -2,8 +2,9 @@
 title: "Geographic Analysis - Group 6"
 subtitle: "Final Report"
 author:
-  - name: Dakota Alder
-  - name: Julio Garcia
+  - Dakota Alder
+  - Julio Garcia
+
 date: today
 date-modified: today
 date-format: long

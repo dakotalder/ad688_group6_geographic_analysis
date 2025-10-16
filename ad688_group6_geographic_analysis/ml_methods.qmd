@@ -2,18 +2,8 @@
 title: "Machine Learning Methods"
 subtitle: "Regression, Classification, Topic Insights"
 author:
-  - name: Dakota Alder
-    affiliations:
-      - id: bu
-        name: Boston University
-        city: Boston
-        state: MA
-  - name: Julio Garcia
-    affiliations:
-      - id: bu
-        name: Boston University
-        city: Boston
-        state: MA
+  - Dakota Alder
+  - Julio Garcia
 format: 
   html:
     toc: true
