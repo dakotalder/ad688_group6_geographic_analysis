@@ -23,6 +23,7 @@ format:
     df-print: paged
 ---
 
+# Load and Preview LightCast Data
 
 ```{python}
 from pyspark.sql import SparkSession
@@ -39,6 +40,18 @@ df.createOrReplaceTempView("project_data")
 
 
 ```
+
+# Drop unnecessary columns
+
+Redundant or irrelevant columns are dropped here.
+
+NAICS and SOC levels are removed because each job is already described by its most detailed (and most general) industry and occupation classification (NAICS_2022_6_NAME and SOC_6_NAME).
+
+Timestamps and system variables (like LAST_UPDATED_TIMESTAMP) are not meaningful.
+
+Simplifying the dataset this way speeds up our processing and makes the whole dataframe look more clean and user-friendly.
+
+
 
 ```{python}
 import pandas as pd
@@ -87,6 +100,15 @@ clean_pdf = cleaned_data.toPandas()
 
 ```
 
+# Handle Missing Values
+
+We also cleaned categorical values
+
+Missing categorical data (like City, Company, State) were replaced with "Unknown" so that there is data in all rows.
+Duplicates were also dropped to not skew the analysis.
+Salary missing values were replaced with the median salary.
+Remote Type Name and Employment type were simplified into smaller groupings.
+
 ```{python}
 #| echo: true
 #| eval: true
@@ -108,6 +130,10 @@ clean_pdf.dropna(thresh=len(clean_pdf)*0.5, axis=1, inplace=True)
 
 ```
 
+# Helper Columns for classifying AI and Posted Dates
+
+We created columns to classify what job titles may be affected by AI vs Non-AI Job Titles
+We created a column for the month that the job was posted in order to create growth data
 ```{python}
 #New Column to Classify AI Jobs and Add Month of Posting Date
 
@@ -133,6 +159,9 @@ clean_pdf["POSTED_MONTH"] = clean_pdf["POSTED"].dt.month
 clean_pdf.head(25)
 ```
 
+# City and State Analysis by AI vs Non-AI Jobs
+
+Key Insights: 
 
 ```{python}
 #Question 1 Visualization: Which Cities or States have the highest job growth for AI vs Non-AI
@@ -226,6 +255,9 @@ plt.show()
 
 ```
 
+# Remote Job Growth by Industry
+
+Key Insights: 
 ```{python}
 #Question 2: Are remote jobs increasing or decreasing across industries?
 
@@ -266,6 +298,9 @@ plt.show()
 
 ```
 
+# Tech-Hubs vs emerging Markets
+
+Key Insights: 
 ```{python}
 #Question #3: Do Tech hubs (Silicon Valley, Austin, Boston) still dominate hiring, or are other locations emerging?
 
@@ -321,6 +356,9 @@ plt.show()
 
 ```
 
+# A Comparison of the Urban and Rural Job Market in relation to AI Careers
+
+Key Insights: 
 ```{python}
 # Question 4: How do Urban vs. Rural Job markets differ for AI and non-AI careers?
 
