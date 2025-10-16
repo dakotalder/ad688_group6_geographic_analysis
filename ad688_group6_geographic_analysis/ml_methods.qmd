@@ -228,7 +228,7 @@ pivot_df = top3.pivot(index="CLUSTER", columns="NAICS_2022_6_NAME", values="coun
 
 print(pivot_df)
 
-pivot_df.plot(kind='bar', stacked=True, figsize=(10,6), colormap='tab20')  
+pivot_df.plot(kind='bar', stacked=True, figsize=(10,6), colormap="viridis")  
 
 plt.title("Top 3 Industries per Cluster")
 plt.xlabel("Cluster")

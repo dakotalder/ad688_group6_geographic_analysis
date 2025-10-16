@@ -124,7 +124,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 plt.figure(figsize=(8,5))
-sns.heatmap(df_team.set_index("Skill"), annot=True, cmap="coolwarm", linewidths=0.5)
+sns.heatmap(df_team.set_index("Skill"), annot=True, cmap="viridis", linewidths=0.5)
 plt.title("Team Skill Levels Heatmap – Julio & Dakota")
 plt.show()
 
@@ -148,7 +148,7 @@ df_gaps_melted = df_team.melt(
 )
 
 plt.figure(figsize=(9,5))
-sns.barplot(data=df_gaps_melted, x="Skill", y="Gap", hue="Member", palette="coolwarm")
+sns.barplot(data=df_gaps_melted, x="Skill", y="Gap", hue="Member", palette="viridis")
 plt.title("Skill Gaps Comparison – Julio vs Dakota (Ideal = 5)")
 plt.xticks(rotation=45, ha="right")
 plt.ylabel("Gap (Difference from Ideal Level 5)")
