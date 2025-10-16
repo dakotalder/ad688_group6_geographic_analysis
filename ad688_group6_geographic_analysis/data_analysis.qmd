@@ -343,8 +343,8 @@ plt.ylabel("Number of Job Postings")
 plt.xticks(rotation=45, ha="right")
 
 # Add labels on top of bars
-for i, row in tech_hub_counts.head(15).iterrows():
-    plt.text(row["count"] + 100, i, f"{row['count']:,}", va="center", fontsize=10)
+#for i, row in tech_hub_counts.head(15).iterrows():
+#    plt.text(row["count"] + 100, i, f"{row['count']:,}", va="center", fontsize=10)
 
 #plt.tight_layout()
 plt.savefig("../ad688_group6_geographic_analysis/images/top15techhubs.png", dpi=300)

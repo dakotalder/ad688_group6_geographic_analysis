@@ -5,13 +5,13 @@ website:
   title: "Geographic Analysis - Group 6 AD688"
   navbar:
     left:
-      - href: index.qmd
+      - href: ad688_group6_geographic_analysis/index.qmd
         text: Home
-      - href: data_analysis.qmd
+      - href: ad688_group6_geographic_analysis/data_analysis.qmd
         text: Data Analysis
-      - href: ml_methods.qmd
+      - href: ad688_group6_geographic_analysis/ml_methods.qmd
         text: ML Methods
-      - href: gap_analysis.qmd
+      - href: ad688_group6_geographic_analysis/gap_analysis.qmd
         text: Skills Gap Analysis
 execute:
   echo: true
@@ -19,6 +19,7 @@ execute:
   freeze: auto
   kernal: python3
   keep-session: true
+
 
 format:
   html:
