@@ -18,6 +18,9 @@ df = spark.read.option("header", "true").option("inferSchema", "true").option("m
 ```
 
 ```{python}
+
+import pandas as pd
+
 columns = [
     "COMPANY_NAME", "COMPANY_IS_STAFFING",              # Identification, company
     "POSTED", "EXPIRED", "DURATION", "MODELED_DURATION", # Dates, duration
@@ -156,3 +159,23 @@ plt.show()
 
 
 ```
+
+# Key Takeaways
+
+Julio: Focus on Communication, Leadership, Python, and Management to reduce gaps
+
+Dakota: Focus on Python and Management. Leadership and Dashboard are strong.
+
+## Recommended Actions
+
+Technical Skills: SQL, Python, Dashboarding; Codecademy, DataCamp, Khan Academy, Coursera
+
+SAP Applications: SAP Learning Hub, openSAP Courses
+
+Soft Skills: Communication: LinkedIn Learning, Coursework
+Leadership and Management: Coursera Management courses
+
+## Team Collaboartion to Bridge Skill Gaps
+
+Cross Training among team members on strong skills, team projects to exercise the weaker skills, and track progress.
+
