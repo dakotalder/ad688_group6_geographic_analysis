@@ -1,5 +1,13 @@
 ---
 title: "Project Overview"
+format: 
+  html:
+    theme: cosmo        
+    toc: true           
+    toc-location: left  
+    code-fold: true    
+    number-sections: true
+    css: styles.css     
 ---
 # Introduction and Research Rationale
 
