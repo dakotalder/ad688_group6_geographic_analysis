@@ -2,13 +2,8 @@
 title: "Geographic Analysis - Group 6"
 subtitle: "Final Report"
 author:
-- name: Dakota Alder
-- name: Julio Garcia
-- affiliations:
-  - id: BU
-    name: Boston University MET
-    city: Boston
-    state: MA
+  - name: Dakota Alder
+  - name: Julio Garcia
 date: today
 date-modified: today
 date-format: long
