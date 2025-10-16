@@ -154,7 +154,7 @@ clean_pdf["AI_JOB"] = clean_pdf["TITLE_RAW"].apply(classify_ai)
 clean_pdf["POSTED"] = pd.to_datetime(clean_pdf["POSTED"], errors="coerce")
 clean_pdf["POSTED_MONTH"] = clean_pdf["POSTED"].dt.month
 
-clean_pdf.head(25)
+#clean_pdf.head(25)
 ```
 
 # City and State Analysis by AI vs Non-AI Jobs
@@ -255,6 +255,10 @@ plt.show()
 
 ```
 
+## Key Insights
+
+The analysis shows that AI jobs postings are increasing at a higher rate than Non-AI jobs, and that is especially true in Hawaii, Wyoming, Montana, and Mississippi. However, there seems to be no AI Job growth in multiple states, and an increase in Non-AI jobs in those same states, suggesting that AI isn't quite yet displacing jobs. In fact, there are only a select few states where AI Jobs are increasing, most of the 50 states have an increase in Non-AI jobs.
+
 # Remote Job Growth by Industry
 
 Key Insights: 
@@ -299,6 +303,10 @@ plt.show()
 
 ```
 
+## Key Insights
+
+When looking at the growth of Remote jobs by industry, we can see that there is an increase in remote jobs in the Finance and Insurance Industries, the Information Industries, and the Administrative and Support and Waste Management and Remediation Services Industries. This seems to suggest that more tech heavy industries can support and are seeing growth in remote positions, but industries like Professional, Scientific, and Technical Services are actually seeing a decline in remote work. These industries might have job titles that require in person work and assistance, which would lead to on-site.
+
 # Tech-Hubs vs emerging Markets
 
 Key Insights: 
@@ -331,7 +339,7 @@ tech_hub_counts = tech_hub_counts.merge(
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-plt.figure(figsize=(12, 8))
+plt.figure(figsize=(14, 8), constrained_layout=True)
 sns.barplot(
     data=tech_hub_counts.head(15),
     x="MSA_NAME",
@@ -348,7 +356,7 @@ plt.xticks(rotation=60, ha="right")
 for i, row in tech_hub_counts.head(15).iterrows():
     plt.text(row["count"] + 100, i, f"{row['count']:,}", va="center", fontsize=10)
 
-plt.tight_layout()
+#plt.tight_layout()
 plt.savefig("../ad688_group6_geographic_analysis/images/top15techhubs.png", dpi=300)
 plt.show()
 
@@ -357,6 +365,10 @@ plt.show()
 
 
 ```
+
+## Key Insights
+
+
 
 # A Comparison of the Urban and Rural Job Market in relation to AI Careers
 

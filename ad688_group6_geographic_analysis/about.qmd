@@ -1,5 +1,8 @@
 ---
 title: "About"
 ---
+# Geographic, AI Impact and Remote Work Analysis - Group 6
 
-About this site
+## Authors: Dakota Alder and Julio Garcia
+
+

@@ -20,7 +20,7 @@ This research analyzes how AI roles and other non-AI roles may be affected by ge
 
 ## AI vs. Non-AI Job Growth
 
-Preliminary findings indicate that AI-related positions show the strongest concentration in technology-intensive states such as California, Washington, and Massachusetts. However, states like Utah, North Carolina, and Colorado show rising growth rates, suggesting decentralization from traditional hubs. In contrast, non-AI jobs remain more evenly distributed, with steady growth across states with large service or manufacturing economies.
+Preliminary findings indicate that AI-related positions are growing in states such as Hawaii, Wyoming, and Montana. In contrast, non-AI jobs remain more evenly distributed, with steady growth across states with large service or manufacturing economies.
 
 ![AI vs. Non-AI Job Growth - State](../ad688_group6_geographic_analysis/images/top10state.png){fig-align="center" width="80%"}
 
@@ -28,19 +28,19 @@ Preliminary findings indicate that AI-related positions show the strongest conce
 
 ## Trends in Remote Work Across Industries
 
-Remote job listings continue to represent a significant share of AI-related careers, especially in data analysis, software engineering, and research roles. Industries such as finance, education technology, and digital media also maintain high remote participation. Conversely, healthcare, logistics, and manufacturing remain predominantly on-site. Overall, remote opportunities appear to be stabilizing rather than growing, signaling a post-pandemic normalization.
+Remote job listings continue to represent a significant share of AI-related careers, especially in Finance and Insurance and Information Industries. Conversely, manufacturing and professional and technical services remain predominantly on-site. 
 
 ![Remote Work Trends](../ad688_group6_geographic_analysis/images/remoteindustries.png){fig-align="center" width="80%"}
 
 ## Tech Hubs vs. Emerging Locations
 
-While legacy tech hubs liek Silicon Valley, Austin, Boston, and Seattle still dominate total AI job volume, emerging markets are gaining ground. Cities such as Salt Lake City, Denver, and Raleigh-Durham show rapid AI job growth relative to population, aided by remote hiring and migration of skilled workers. This suggests that distributed innovation ecosystems are replacing the singular dominance of coastal tech centers.
+Our data shows that job postings are the highest in the New York, Washington DC, Dallas, and Chicago metro areas, while the traditional tech hubs like Boston, the Bay Area, and Austin actually aren't at the top of job postings anymore. The data suggests that this is mostly due to high populations, so a deeper dive into industry would help in showing emerging markets outside of traditional tech hubs.
 
 ![Top 15 Tech Hubs](../ad688_group6_geographic_analysis/images/top15techhubs.png){fig-align="center" width="80%"}
 
 ## Urban vs. Rural Dynamics
 
-Urban regions continue to host the majority of AI employment due to their access to universities, data infrastructure, and venture capital. However, remote work options are beginning to bridge the urban-rural divide, allowing rural professionals to participate in digital industries without relocating. Rural job markets, while smaller, show higher proportions of non-AI and on-site work, reflecting continued dependence on physical industries and public sector employment.
+Urban regions continue to host the majority of AI employment due to their access to universities, data infrastructure, and venture capital. However, remote work options are beginning to bridge the urban-rural divide, allowing rural professionals to participate in digital industries without relocating. Rural job markets, while smaller, show almost exact proportions of AI and Non-AI postings, reflecting that AI jobs as a whole don't necessarily require specific locations.
 
 ![Urban and Rural AI Makeup](../ad688_group6_geographic_analysis/images/urbanai.png){fig-align="center" width="80%"}
 

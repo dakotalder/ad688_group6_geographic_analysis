@@ -117,7 +117,7 @@ skills_data = {
 }
 
 df_team = pd.DataFrame(skills_data)
-df_team
+#df_team
 
 
 import seaborn as sns
