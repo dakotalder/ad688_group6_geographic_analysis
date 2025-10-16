@@ -15,3 +15,9 @@ date-format: long
 format: 
     docx: default
 ---
+
+{{< include about.qmd >}}
+{{< include index.qmd >}}
+{{< include data_analysis.qmd >}}
+{{< include gap_analysis.qmd >}}
+{{< include ml_methods.qmd >}}
