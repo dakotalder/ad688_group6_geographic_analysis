@@ -215,7 +215,7 @@ import seaborn as sns
 state_visual = avg_growth_state.groupby("AI_JOB").head(10)
 
 plt.figure(figsize=(10,6))
-ax_state = sns.barplot(data=state_visual, y="STATE_NAME", x="GROWTH", hue="AI_JOB")
+ax_state = sns.barplot(data=state_visual, y="STATE_NAME", x="GROWTH", hue="AI_JOB", palette="viridis")
 plt.title("Top 10 States by Average Monthly Job Growth: AI vs Non-AI")
 plt.xlabel("Average Monthly Growth (%)")
 plt.ylabel("State")
@@ -230,7 +230,7 @@ plt.show()
 city_visual = avg_growth_city.groupby("AI_JOB").head(10)
 
 plt.figure(figsize=(10,6))
-ax_city = sns.barplot(data=city_visual, y="CITY_NAME", x="GROWTH", hue="AI_JOB")
+ax_city = sns.barplot(data=city_visual, y="CITY_NAME", x="GROWTH", hue="AI_JOB", palette="viridis")
 plt.title("Top 10 Cities by Average Monthly Job Growth: AI vs Non-AI")
 plt.xlabel("Average Monthly Growth (%)")
 plt.ylabel("City")
