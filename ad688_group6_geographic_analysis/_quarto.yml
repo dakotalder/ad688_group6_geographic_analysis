@@ -9,11 +9,10 @@ website:
         text: Home
       - href: data_analysis.qmd
         text: Data Analysis
-      - href: research.qmd
-        text: Research
-      - href: careers.qmd
-        text: Career Strategy
-      - about.qmd
+      - href: ml_methods.qmd
+        text: ML Methods
+      - href: gap_analysis.qmd
+        text: Skills Gap Analysis
 execute:
   echo: true
   cache: true
