@@ -25,3 +25,11 @@ While legacy tech hubs liek Silicon Valley, Austin, Boston, and Seattle still do
 ## Urban vs. Rural Dynamics
 
 Urban regions continue to host the majority of AI employment due to their access to universities, data infrastructure, and venture capital. However, remote work options are beginning to bridge the urban-rural divide, allowing rural professionals to participate in digital industries without relocating. Rural job markets, while smaller, show higher proportions of non-AI and on-site work, reflecting continued dependence on physical industries and public sector employment.
+
+### References
+
+Khan, A., Shad, F., Sethi, S., & Bibi, M. (2024). The impact of artificial intelligence (AI) on job displacement and the future of work. Social Science Review Archives, 2(2), 2296–2306. https://doi.org/10.70670/SRA.v3i1.509
+
+Sheffi, Y. (2024). Technology is not enough: Potential job displacement in an AI-driven future. Journal of Supply Chain Management, Logistics and Procurement, 6(4), 338–351.
+
+Solo, L. B., Hossain, S., & Weah, S. S. II. (2025). AI-powered job market insights: How AI adoption influences salary and job growth projections. North American Academic Research, 8(2), 224–241. https://doi.org/10.5281/zenodo.15212191
